@@ -48,6 +48,7 @@ const filterdata = async (req, res) => {
 const findData = async (req, res) => {
 
     await order.aggregate([
+        // stage 1
         {
             $lookup:
             {
@@ -60,6 +61,7 @@ const findData = async (req, res) => {
                 as: "inventory_docs",
             }
         },
+        // stage 2
         {
             $project: {
                 item: 1, price: 1, info: {
@@ -67,6 +69,7 @@ const findData = async (req, res) => {
                 }
             }
         },
+        // stage 3
         {
             $sort: { item: -1 }
         },
